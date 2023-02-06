@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -8,29 +9,61 @@ import Profiles from './scenes/dashboard/Profile/Profiles';
 import Sidebar from './scenes/global/Sidebar';
 import TopBar from './scenes/global/Topbar';
 import { ColorModeContext, useMode } from './theme';
+import { CurrencyProvider } from './Context/Context';
+import ExchangeCurrencies from './scenes/ExchangeCurrencies/ExchangeCurrencies';
+import OurCurrencies from './scenes/Our Currencies/OurCurrencies';
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const [sum, setSum] = useState(0);
+  const [defaultCurrency, setDefaultCurrrency] = useState('USD');
+  const [wallet, setWallet] = useState([
+    { currency: 'USD', amount: 100 },
+    { currency: 'EUR', amount: 500 },
+    { currency: 'XAF', amount: 10000 },
+    { currency: 'XAF', amount: 10000 },
+    { currency: 'XAF', amount: 10000 },
+  ]);
+  console.table(wallet);
+  const [walletCurrency, setWalletCurrency] = useState('');
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          <Sidebar isSidebar={isSidebar} />
-          <main className="content">
-            <TopBar setIsSidebar={setIsSidebar} />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/exchange" element={<Exchange />} />
-              <Route path="/faq" element={<FAQpage />} />
-              <Route path="/form" element={<Profiles />} />
-            </Routes>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <CurrencyProvider
+      value={{
+        wallet,
+        setWallet,
+        walletCurrency,
+        setWalletCurrency,
+        defaultCurrency,
+        setDefaultCurrrency,
+        sum,
+        setSum,
+      }}
+    >
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="app">
+            <Sidebar isSidebar={isSidebar} />
+            <main className="content">
+              <TopBar setIsSidebar={setIsSidebar} />
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/exchange" element={<Exchange />} />
+                <Route path="/faq" element={<FAQpage />} />
+                <Route path="/form" element={<Profiles />} />
+                <Route path="/list" element={<OurCurrencies />} />
+                <Route
+                  path="/exchangeCurrencies"
+                  element={<ExchangeCurrencies />}
+                />
+              </Routes>
+            </main>
+          </div>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </CurrencyProvider>
   );
 }
 

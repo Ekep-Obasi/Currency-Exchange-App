@@ -7,6 +7,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import WalletIcon from '@mui/icons-material/Wallet';
 import ListIcon from '@mui/icons-material/List';
 import HelpIcon from '@mui/icons-material/Help';
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
@@ -92,7 +93,7 @@ function Sidebar() {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                  src="https://www.allthetests.com/quiz22/picture_thumb/pic_1171831236_1.png?1592828498"
                   style={{ cursor: 'pointer', borderRadius: '50%' }}
                 />
               </Box>
@@ -103,7 +104,7 @@ function Sidebar() {
                   fontWeight="bold"
                   sx={{ m: '10px 0 0 0' }}
                 >
-                  Alice
+                  [Client Name]
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Client
@@ -135,12 +136,21 @@ function Sidebar() {
               setSelected={setSelected}
             />
             <Item
-              title="Exhange Convert"
+              title="Setup Wallet"
               to="/exchange"
+              icon={<WalletIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Exchange Currencies"
+              to="/exchangeCurrencies"
               icon={<CurrencyExchangeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+
             <Item
               title="Our Currencies"
               to="/list"

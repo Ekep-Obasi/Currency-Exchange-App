@@ -8,57 +8,53 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  useTheme,
 } from '@mui/material';
-import { useContext } from 'react';
-import { CurrencyContext } from '../../../Context/Context';
-import data from '../../../data/currencies.json';
-import api from '../../../api';
+
+import { useState } from 'react';
+import data from '../../data/currencies.json';
+import api from '../../api';
+import tokens from '../../theme';
 
 function Exchange() {
-  const {
-    setWallet,
-    walletCurrency,
-    setDefaultCurrrency,
-    defaultCurrency,
-    setWalletCurrency,
-    setSum,
-  } = useContext(CurrencyContext);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [state, setState] = useState({});
+  const [departureCurrency, setDepartureCurrency] = useState();
+  const [arrivalCurrency, setArrivalCurrency] = useState();
+  const [result, setResult] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const amount = e.target.elements.amount.value;
 
     api
-      .convertCurrency(defaultCurrency, walletCurrency, amount)
-      .then((res) => setSum((prev) => prev + res.result));
+      .convertCurrency(departureCurrency, arrivalCurrency, amount)
+      .then((res) => setResult(res.result));
 
-    setWallet((value) => [
-      ...value,
-      {
-        amount,
-        currency: walletCurrency,
-      },
-    ]);
+    setState({ amount, departureCurrency, arrivalCurrency });
   };
 
   return (
     <div>
       <Box padding={5}>
         <Box paddingY={5}>
-          <Typography variant="h1">Setup Your Wallet</Typography>
-          <Typography variant="h4">Setup your accounts</Typography>
+          <Typography variant="h1">Currency Converter</Typography>
+          <Typography variant="h4">
+            Covert from one currency to another
+          </Typography>
         </Box>
 
         <Box display="flex" flexDirection="column">
           <form onSubmit={handleSubmit}>
             <Box display="flex" sx={{ flexDirection: 'column', gap: '20px' }}>
               <FormControl>
-                <InputLabel>Choose Default currency</InputLabel>
+                <InputLabel>From</InputLabel>
                 <Select
                   fullWidth
-                  label="Choose Default Currency"
-                  onChange={(e) => setDefaultCurrrency(e.target.value)}
-                  value={defaultCurrency}
+                  label="to"
+                  onChange={(e) => setDepartureCurrency(e.target.value)}
+                  value={departureCurrency}
                   required
                 >
                   {Object.keys(data.symbols).map((key) => (
@@ -70,11 +66,11 @@ function Exchange() {
               </FormControl>
 
               <FormControl>
-                <InputLabel>Wallet Currency</InputLabel>
+                <InputLabel>TO</InputLabel>
                 <Select
                   fullWidth
                   label="to"
-                  onChange={(e) => setWalletCurrency(e.target.value)}
+                  onChange={(e) => setArrivalCurrency(e.target.value)}
                   required
                 >
                   {Object.keys(data.symbols).map((key) => (
@@ -96,8 +92,28 @@ function Exchange() {
               />
 
               <Button type="submit" color="success" variant="contained">
-                + Create Wallet
+                CONVERT
               </Button>
+            </Box>
+            <Box display="flex" justifyContent="center" p={5}>
+              <Typography display="flex" gap="5px" variant="h2">
+                {state.amount}
+                <Typography
+                  variant="h2"
+                  fontWeight="bold"
+                  sx={{ color: colors.greenAccent[600] }}
+                >
+                  {state.departureCurrency}
+                </Typography>
+                = {result}
+                <Typography
+                  variant="h2"
+                  fontWeight="bold"
+                  sx={{ color: colors.greenAccent[600] }}
+                >
+                  {state.arrivalCurrency}
+                </Typography>
+              </Typography>
             </Box>
           </form>
         </Box>
