@@ -1,39 +1,15 @@
-/* eslint-disable no-console */
-const URLAllCurrencies = 'https://api.apilayer.com/exchangerates_data/symbols';
-const apiKey = 'G0tiJxf4YIqjCgGxmzJPOy1lSlFGe9t0';
+const options = { method: 'GET', headers: { accept: 'application/json' } };
 
-// G0tiJxf4YIqjCgGxmzJPOy1lSlFGe9t0 6hHACn6NLiKozud74cEj6QRLF6OlyI3Z
-
-const myHeaders = new Headers();
-myHeaders.append('apikey', apiKey);
-
-const requestOptions = {
-  method: 'GET',
-  redirect: 'follow',
-  headers: myHeaders,
-};
-function getAllCurrencies() {
-  return fetch(URLAllCurrencies, requestOptions).then((response) =>
-    response.text()
-  );
-}
-
-function convertCurrency(to, from, amount) {
-  return fetch(
-    `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`,
-    requestOptions
+const getRates = (defaultCurrency) =>
+  fetch(
+    `https://api.fastforex.io/fetch-all?from=${defaultCurrency}&api_key=8bc9d4a802-a8e29af3dc-rppe6l`,
+    options
   ).then((response) => response.json());
-}
 
-function getRates(base) {
-  return fetch(
-    `https://api.apilayer.com/fixer/latest?symbols=&base=${base}`,
-    requestOptions
-  ).then((response) => response.join());
-}
+const convertCurrency = (from, to, amount) =>
+  fetch(
+    `https://api.fastforex.io/convert?from=${from}&to=${to}&amount=${amount}&api_key=8bc9d4a802-a8e29af3dc-rppe6l`,
+    options
+  ).then((response) => response.json());
 
-export default {
-  getAllCurrencies,
-  convertCurrency,
-  getRates,
-};
+export default { getRates, convertCurrency };

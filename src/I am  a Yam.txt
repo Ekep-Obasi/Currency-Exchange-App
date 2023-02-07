@@ -1,0 +1,13 @@
+  // Promise.all(
+  //   wallet.map(({ currency, amount }) => {
+  //   return
+
+  //     api.convertCurrency('USD', 'EUR', 1000).then(({ result }) => result);
+
+  //   })
+  //   ).then(console.log);
+  //    => {
+  //   console.log(...values);
+  //   console.log(setSum)
+  //   setSum(values.reduce((a, b) => a + b, 0));
+  //   });

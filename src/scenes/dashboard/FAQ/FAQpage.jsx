@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   Accordion,
@@ -9,6 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 
 function FAQpage() {
+  console.count('FAQ page rendered');
+
   return (
     <div>
       <Box padding={5}>

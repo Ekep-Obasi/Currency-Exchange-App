@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable no-console */
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
@@ -16,16 +17,15 @@ import OurCurrencies from './scenes/Our Currencies/OurCurrencies';
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const [rates, setRates] = useState({});
   const [sum, setSum] = useState(0);
   const [defaultCurrency, setDefaultCurrrency] = useState('USD');
   const [wallet, setWallet] = useState([
     { currency: 'USD', amount: 100 },
     { currency: 'EUR', amount: 500 },
     { currency: 'XAF', amount: 10000 },
-    { currency: 'XAF', amount: 10000 },
-    { currency: 'XAF', amount: 10000 },
   ]);
-  console.table(wallet);
+
   const [walletCurrency, setWalletCurrency] = useState('');
 
   return (
@@ -39,6 +39,8 @@ function App() {
         setDefaultCurrrency,
         sum,
         setSum,
+        rates,
+        setRates,
       }}
     >
       <ColorModeContext.Provider value={colorMode}>

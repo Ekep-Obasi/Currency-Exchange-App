@@ -30,7 +30,7 @@ function Exchange() {
 
     api
       .convertCurrency(departureCurrency, arrivalCurrency, amount)
-      .then((res) => setResult(res.result));
+      .then((res) => setResult(res.result[arrivalCurrency]));
 
     setState({ amount, departureCurrency, arrivalCurrency });
   };
@@ -86,9 +86,10 @@ function Exchange() {
                 id="amount"
                 label="Enter amount"
                 variant="filled"
-                type="text"
+                type="number"
                 name="currency"
                 sx={{ gridColumn: 'span 2' }}
+                required
               />
 
               <Button type="submit" color="success" variant="contained">
