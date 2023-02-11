@@ -20,11 +20,12 @@ function App() {
   const [rates, setRates] = useState({});
   const [sum, setSum] = useState(0);
   const [defaultCurrency, setDefaultCurrrency] = useState('USD');
-  const [wallet, setWallet] = useState([
+  const johnDoeWallet = [
     { currency: 'USD', amount: 100 },
     { currency: 'EUR', amount: 500 },
     { currency: 'XAF', amount: 10000 },
-  ]);
+  ];
+  const [wallet, setWallet] = useState([...johnDoeWallet]);
 
   const [walletCurrency, setWalletCurrency] = useState('');
 

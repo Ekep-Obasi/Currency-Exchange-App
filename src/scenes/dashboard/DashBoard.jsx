@@ -22,6 +22,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Link } from 'react-router-dom';
 import api from '../../api';
 import data from '../../data/currencies.json';
 import { CurrencyContext } from '../../Context/Context';
@@ -253,7 +254,7 @@ function StatBox({ title, subtitle, icon, increase, accountID, accountName }) {
           fontStyle="italic"
           sx={{ color: colors.greenAccent[600] }}
         >
-          {increase}
+          {increase} {title}
         </Typography>
       </Box>
     </Box>
@@ -264,6 +265,26 @@ function Wallet() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { wallet } = useContext(CurrencyContext);
+
+  if (wallet.length === 0) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        gap="25px"
+        p={7}
+      >
+        <Typography variant="h2">No Accounts Yet</Typography>
+        <Link style={{ textDecoration: 'none' }} to="/exchange">
+          <Button size="large" variant="contained" color="success">
+            Deposit a Currency
+          </Button>
+        </Link>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -285,7 +306,7 @@ function Wallet() {
               sx={{ color: colors.greenAccent[600], fontSize: '65px' }}
             />
           }
-          increase={amount}
+          increase={parseFloat(amount).toFixed(2)}
         />
       ))}
     </Box>
