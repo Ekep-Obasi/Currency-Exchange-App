@@ -1,0 +1,7 @@
+{
+"date":  "2023-02-03",
+"info": {"timestamp": 1675432323, "rate": 0.001666},
+"query": {"from": "XAF", "to": "USD", "amount": 4000},
+"result": 6.664,
+"success": true
+}
